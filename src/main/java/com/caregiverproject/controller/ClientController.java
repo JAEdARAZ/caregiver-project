@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.caregiverproject.entity.Client;
 import com.caregiverproject.service.ClientService;
@@ -34,5 +35,14 @@ public class ClientController {
 		clientService.save(theClient);
 		
 		return "redirect:/mainMenu";
+	}
+	
+	@GetMapping("/clientFormUpdate")
+	public String updateClient(@RequestParam("clientId") int clientId, Model theModel) {
+		Client theClient = clientService.findById(clientId);
+		theModel.addAttribute("client", theClient);
+		theModel.addAttribute("listCaregivers", theClient.getCaregivers());
+		
+		return "forms/client-form";
 	}
 }
