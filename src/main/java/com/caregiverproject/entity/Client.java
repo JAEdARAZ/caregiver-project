@@ -66,12 +66,16 @@ public class Client {
 		return "Client [id=" + id + ", name=" + name + "]";
 	}
 	
-	public void addCaregiver(Caregiver newCaregiver) {
+	public void addCaregiver(Caregiver caregiver) {
 		if(this.caregivers == null) {
 			this.caregivers = new ArrayList<>();
 		}
 		
-		this.caregivers.add(newCaregiver);
+		this.caregivers.add(caregiver);
+	}
+	
+	public void deleteCaregiver(Caregiver caregiver) {
+		this.caregivers.remove(caregiver);
 	}
 	
 }

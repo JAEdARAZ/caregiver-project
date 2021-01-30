@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.caregiverproject.entity.Client;
 import com.caregiverproject.service.ClientService;
@@ -42,7 +43,17 @@ public class ClientController {
 		Client theClient = clientService.findById(clientId);
 		theModel.addAttribute("client", theClient);
 		theModel.addAttribute("listCaregivers", theClient.getCaregivers());
+		theModel.addAttribute("clientIdAtt", theClient.getId()); //so it's available to delete a caregiver from the list
 		
 		return "forms/client-form";
+	}
+	
+	@GetMapping("/deleteCaregiver")
+	public String deleteCaregiver(RedirectAttributes redirectAttributes, @RequestParam("caregiverId") int caregiverId,
+									@RequestParam("clientId") int clientId, Model theModel) {
+		clientService.deleteCaregiverFromClient(caregiverId, clientId);
+		
+		redirectAttributes.addAttribute("clientId", clientId);
+		return "redirect:/clients/clientFormUpdate";
 	}
 }

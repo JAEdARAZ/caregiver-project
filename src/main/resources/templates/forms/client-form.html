@@ -46,7 +46,7 @@
 				<tr th:each="tempCaregiver : ${listCaregivers}">
 					<td th:text="${tempCaregiver.name}" />
 					<td>
-						<a th:href="@{/clients/deleteCaregiver(caregiverId=${tempCaregiver.id})}"
+						<a th:href="@{/clients/deleteCaregiver(caregiverId=${tempCaregiver.id}, clientId=${clientIdAtt})}"
 						   class="btn btn-danger btn-sm"
 						   onclick="if (!(confirm('Sure you want to delete the caregiver?'))) return false">
 							Delete

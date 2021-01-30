@@ -16,4 +16,6 @@ public interface ClientService {
 	public void deleteById(int theId);
 
 	void addCaregiverToClient(int idCaregiver, int idClient);
+
+	void deleteCaregiverFromClient(int idCaregiver, int idClient);
 }

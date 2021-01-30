@@ -59,5 +59,14 @@ public class ClientServiceImpl implements ClientService {
         	clientRepository.save(client);
         }
     }
+	
+	@Override
+	public void deleteCaregiverFromClient(int idCaregiver, int idClient) {
+		Client client = this.findById(idClient);
+        Caregiver caregiver = caregiverService.findById(idCaregiver);
+        
+        client.deleteCaregiver(caregiver);
+        clientRepository.save(client);
+	}
 
 }
