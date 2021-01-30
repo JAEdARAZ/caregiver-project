@@ -1,10 +1,14 @@
 package com.caregiverproject.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,10 +26,11 @@ public class Caregiver {
 	@Column(name="colour")
 	private String colour;
 	
+	@ManyToMany(mappedBy = "caregivers") //reference to the List of Caregivers in Client entity
+	private List<Client> clients;
 
 	public Caregiver () {}
 
-	
 	public int getId() {
 		return id;
 	}
@@ -48,6 +53,19 @@ public class Caregiver {
 
 	public void setColour(String colour) {
 		this.colour = colour;
-	} 
+	}
+
+	@Override
+	public String toString() {
+		return "Caregiver [id=" + id + ", name=" + name + ", colour=" + colour + "]";
+	}
+
+	public void addClient(Client newClient) {
+		if (this.clients == null) {
+			this.clients = new ArrayList<>();
+		}
+		
+		this.clients.add(newClient);
+	}
 	
 }

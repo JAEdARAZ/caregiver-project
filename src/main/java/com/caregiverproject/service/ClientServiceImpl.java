@@ -7,16 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.caregiverproject.dao.ClientRepository;
+import com.caregiverproject.entity.Caregiver;
 import com.caregiverproject.entity.Client;
 
 @Service
 public class ClientServiceImpl implements ClientService {
 
 	private ClientRepository clientRepository;
+	private CaregiverService caregiverService;
 	
 	@Autowired
-	public ClientServiceImpl(ClientRepository clientRepository) {
+	public ClientServiceImpl(ClientRepository clientRepository, CaregiverService caregiverService) {
 		this.clientRepository = clientRepository;
+		this.caregiverService = caregiverService;
 	}
 	
 	@Override
@@ -45,5 +48,16 @@ public class ClientServiceImpl implements ClientService {
 	public void deleteById(int theId) {
 		clientRepository.deleteById(theId);
 	}
+	
+	@Override
+	public void addCaregiverToClient(int idCaregiver, int idClient) {
+        Client client = this.findById(idClient);
+        Caregiver caregiver = caregiverService.findById(idCaregiver);
+
+        if (client != null) {
+        	client.addCaregiver(caregiver);
+        	clientRepository.save(client);
+        }
+    }
 
 }
