@@ -1,5 +1,7 @@
 package com.caregiverproject.controller;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,17 +49,12 @@ public class ClientController {
 		Client theClient = clientService.findById(clientId);
 		theModel.addAttribute("client", theClient);
 		
-		//so it's available when the screen is refreshed (/deleteCaregiver and /saveNewCaregiver
-		theModel.addAttribute("clientIdAtt", theClient.getId());
-		
 		//form object to be able to access the Caregiver in the dropdown list
 		theModel.addAttribute("caregiverSelector", new CaregiverSelector());
 		
 		//list of caregivers that the client does not have (dropdown)
 		theModel.addAttribute("listCaregiversToAdd", clientService.getRemainingCaregivers(clientId));
-		
-		//list of the caregivers that the client has
-		theModel.addAttribute("listCaregivers", theClient.getCaregivers());
+
 		
 		return "forms/client-form";
 	}

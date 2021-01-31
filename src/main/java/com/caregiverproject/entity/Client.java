@@ -27,7 +27,7 @@ public class Client {
 	@Column(name="name")
 	private String name;
 	
-	@ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch=FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinTable(
 		name="carer_client",
 		joinColumns=@JoinColumn(name="id_client"),

@@ -21,6 +21,8 @@
 		<!-- employee form -->
 		<form action="#" th:action="@{/clients/save}" th:object="${client}" method="POST">
 			<input type="hidden" th:field="*{id}" /> 
+			
+			<input type="hidden" th:field="*{caregivers}" /> 
 						 
 			<input type="text" th:field="*{name}"
 					class="form-control mb-4 col-4" placeholder="Name" />
@@ -34,7 +36,7 @@
 		
 		<!-- dropdown with Caregivers to add -->
 		<div th:if="${listCaregiversToAdd != null}">
-			<form action="#" th:action="@{/clients/saveNewCaregiver(clientId=${clientIdAtt})}" 
+			<form action="#" th:action="@{/clients/saveNewCaregiver(clientId=${client.id})}" 
 								th:object="${caregiverSelector}" method="POST">
 								
 				<div class="form-group blu-margin">
@@ -59,10 +61,10 @@
 			</thead>
 			
 			<tbody>
-				<tr th:each="tempCaregiver : ${listCaregivers}">
+				<tr th:each="tempCaregiver : ${client.caregivers}">
 					<td th:text="${tempCaregiver.name}" />
 					<td>
-						<a th:href="@{/clients/deleteCaregiver(caregiverId=${tempCaregiver.id}, clientId=${clientIdAtt})}"
+						<a th:href="@{/clients/deleteCaregiver(caregiverId=${tempCaregiver.id}, clientId=${client.id})}"
 						   class="btn btn-danger btn-sm"
 						   onclick="if (!(confirm('Sure you want to delete the caregiver?'))) return false">
 							Delete
