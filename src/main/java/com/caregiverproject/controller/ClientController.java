@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.caregiverproject.entity.Caregiver;
+import com.caregiverproject.entity.CaregiverSelector;
 import com.caregiverproject.entity.Client;
 import com.caregiverproject.service.ClientService;
 
@@ -43,15 +45,32 @@ public class ClientController {
 		Client theClient = clientService.findById(clientId);
 		theModel.addAttribute("client", theClient);
 		theModel.addAttribute("listCaregivers", theClient.getCaregivers());
-		theModel.addAttribute("clientIdAtt", theClient.getId()); //so it's available to delete a caregiver from the list
+		
+		//so it's available when the screen is refreshed (/deleteCaregiver and /saveNewCaregiver
+		theModel.addAttribute("clientIdAtt", theClient.getId());
+		
+		//form object to be able to access the Caregiver in the dropdown list
+		theModel.addAttribute("caregiverSelector", new CaregiverSelector());
+		
+		
 		
 		return "forms/client-form";
 	}
 	
 	@GetMapping("/deleteCaregiver")
 	public String deleteCaregiver(RedirectAttributes redirectAttributes, @RequestParam("caregiverId") int caregiverId,
-									@RequestParam("clientId") int clientId, Model theModel) {
+									@RequestParam("clientId") int clientId) {
 		clientService.deleteCaregiverFromClient(caregiverId, clientId);
+		
+		redirectAttributes.addAttribute("clientId", clientId);
+		return "redirect:/clients/clientFormUpdate";
+	}
+	
+	@PostMapping("/saveNewCaregiver")
+	public String saveNewCaregiver(RedirectAttributes redirectAttributes, @RequestParam("clientId") int clientId,
+										@ModelAttribute CaregiverSelector caregiverSelector) {
+		Caregiver theCaregiver = caregiverSelector.getSelectedCaregiver();
+		
 		
 		redirectAttributes.addAttribute("clientId", clientId);
 		return "redirect:/clients/clientFormUpdate";

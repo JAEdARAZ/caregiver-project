@@ -2,6 +2,7 @@ package com.caregiverproject.service;
 
 import java.util.List;
 
+import com.caregiverproject.entity.Caregiver;
 import com.caregiverproject.entity.Client;
 
 
@@ -18,4 +19,6 @@ public interface ClientService {
 	void addCaregiverToClient(int idCaregiver, int idClient);
 
 	void deleteCaregiverFromClient(int idCaregiver, int idClient);
+
+	List<Caregiver> getRemainingCaregivers(int idClient);
 }

@@ -68,5 +68,12 @@ public class ClientServiceImpl implements ClientService {
         client.deleteCaregiver(caregiver);
         clientRepository.save(client);
 	}
+	
+	@Override
+	public List<Caregiver> getRemainingCaregivers(int idClient){
+		
+		
+		return null;
+	}
 
 }
