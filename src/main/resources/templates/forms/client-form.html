@@ -33,19 +33,21 @@
 		<p class="h4 mb-4">Caregivers</p><br/>
 		
 		<!-- dropdown with Caregivers to add -->
-		<form action="#" th:action="@{/clients/saveNewCaregiver(clientId=${clientIdAtt})}" 
-							th:object="${caregiverSelector}" method="POST">
-							
-			<div class="form-group blu-margin">
-			    <select class="form-control" th:field="*{selectedCaregiver}">
-				    <option value="0">Select caregiver</option>
-				    <option th:each="tempCaregiver : ${listCaregivers}" th:value="${tempCaregiver.id}" th:text="${tempCaregiver.name}"></option>
-			    </select>
-			</div>
-			
-			<button type="submit" class="btn btn-info col-2">Add caregiver</button>
-			
-		</form><br/>
+		<div th:if="${listCaregiversToAdd != null}">
+			<form action="#" th:action="@{/clients/saveNewCaregiver(clientId=${clientIdAtt})}" 
+								th:object="${caregiverSelector}" method="POST">
+								
+				<div class="form-group blu-margin">
+				    <select class="form-control" th:field="*{selectedCaregiver}">
+					    <option value="null">Select caregiver</option>
+					    <option th:each="tempCaregiver : ${listCaregiversToAdd}" th:value="${tempCaregiver.id}" th:text="${tempCaregiver.name}"></option>
+				    </select>
+				</div>
+				
+				<button type="submit" class="btn btn-info col-2">Add caregiver</button>
+				
+			</form><br/>
+		</div>
 		
 		
 		<table class="table table-bordered table-striped">

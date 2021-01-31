@@ -3,6 +3,7 @@ package com.caregiverproject.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,9 +43,9 @@ public class ClientController {
 	
 	@GetMapping("/clientFormUpdate")
 	public String updateClient(@RequestParam("clientId") int clientId, Model theModel) {
+		//client form
 		Client theClient = clientService.findById(clientId);
 		theModel.addAttribute("client", theClient);
-		theModel.addAttribute("listCaregivers", theClient.getCaregivers());
 		
 		//so it's available when the screen is refreshed (/deleteCaregiver and /saveNewCaregiver
 		theModel.addAttribute("clientIdAtt", theClient.getId());
@@ -52,7 +53,11 @@ public class ClientController {
 		//form object to be able to access the Caregiver in the dropdown list
 		theModel.addAttribute("caregiverSelector", new CaregiverSelector());
 		
+		//list of caregivers that the client does not have (dropdown)
+		theModel.addAttribute("listCaregiversToAdd", clientService.getRemainingCaregivers(clientId));
 		
+		//list of the caregivers that the client has
+		theModel.addAttribute("listCaregivers", theClient.getCaregivers());
 		
 		return "forms/client-form";
 	}
@@ -67,10 +72,12 @@ public class ClientController {
 	}
 	
 	@PostMapping("/saveNewCaregiver")
-	public String saveNewCaregiver(RedirectAttributes redirectAttributes, @RequestParam("clientId") int clientId,
-										@ModelAttribute CaregiverSelector caregiverSelector) {
-		Caregiver theCaregiver = caregiverSelector.getSelectedCaregiver();
-		
+	public String saveNewCaregiver(RedirectAttributes redirectAttributes, @RequestParam("clientId") int clientId, 
+										@ModelAttribute CaregiverSelector caregiverSelector, BindingResult bindingResult) {
+		if(!bindingResult.hasErrors()) {
+			Caregiver theCaregiver = caregiverSelector.getSelectedCaregiver();
+			clientService.addCaregiverToClient(theCaregiver.getId(), clientId);
+		}
 		
 		redirectAttributes.addAttribute("clientId", clientId);
 		return "redirect:/clients/clientFormUpdate";

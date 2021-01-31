@@ -2,6 +2,7 @@ package com.caregiverproject.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,9 +72,16 @@ public class ClientServiceImpl implements ClientService {
 	
 	@Override
 	public List<Caregiver> getRemainingCaregivers(int idClient){
+		List<Caregiver> caregivers = caregiverService.findAll();
 		
+		Client client = this.findById(idClient);
+		Set<Caregiver> clientCaregivers = client.getCaregivers();
 		
-		return null;
+		for(Caregiver c : clientCaregivers) {
+			caregivers.remove(c);
+		}
+		
+		return caregivers.size() > 0 ? caregivers : null;
 	}
 
 }
