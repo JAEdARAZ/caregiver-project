@@ -1,7 +1,7 @@
 package com.caregiverproject.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +27,7 @@ public class Caregiver {
 	private String colour;
 	
 	@ManyToMany(mappedBy = "caregivers") //reference to the List of Caregivers in Client entity
-	private List<Client> clients;
+	private Set<Client> clients;
 
 	public Caregiver () {}
 
@@ -62,7 +62,7 @@ public class Caregiver {
 
 	public void addClient(Client newClient) {
 		if (this.clients == null) {
-			this.clients = new ArrayList<>();
+			this.clients = new HashSet<>();
 		}
 		
 		this.clients.add(newClient);

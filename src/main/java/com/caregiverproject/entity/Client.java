@@ -1,7 +1,7 @@
 package com.caregiverproject.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -33,7 +33,7 @@ public class Client {
 		joinColumns=@JoinColumn(name="id_client"),
 		inverseJoinColumns=@JoinColumn(name="id_caregiver")
 	)
-	private List<Caregiver> caregivers;
+	private Set<Caregiver> caregivers;
 
 	public Client() {}
 
@@ -53,11 +53,11 @@ public class Client {
 		this.name = name;
 	}
 
-	public List<Caregiver> getCaregivers() {
+	public Set<Caregiver> getCaregivers() {
 		return caregivers;
 	}
 
-	public void setCaregivers(List<Caregiver> caregivers) {
+	public void setCaregivers(Set<Caregiver> caregivers) {
 		this.caregivers = caregivers;
 	}
 
@@ -68,7 +68,7 @@ public class Client {
 	
 	public void addCaregiver(Caregiver caregiver) {
 		if(this.caregivers == null) {
-			this.caregivers = new ArrayList<>();
+			this.caregivers = new HashSet<>();
 		}
 		
 		this.caregivers.add(caregiver);
