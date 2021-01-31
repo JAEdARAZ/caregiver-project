@@ -12,11 +12,9 @@
 </head>
 
 <body>
-	<div class="container">
+	<div class="container mt-3">
 		
-		<h3>Client directory</h3><hr>
-		
-		<p class="h4 mb-4">Save Client</p>
+		<h4>CLIENT</h4><hr>
 		
 		<!-- employee form -->
 		<form action="#" th:action="@{/clients/save}" th:object="${client}" method="POST">
@@ -24,29 +22,35 @@
 			
 			<input type="hidden" th:field="*{caregivers}" /> 
 						 
-			<input type="text" th:field="*{name}"
-					class="form-control mb-4 col-4" placeholder="Name" />
+			<div class="container" >
+				<div class="row">
+					<input type="text" th:field="*{name}"
+					class="form-control col-4" placeholder="Name" />
 					
-			<button type="submit" class="btn btn-info col-2">Save</button>
+					<button type="submit" class="btn btn-info col-2 ml-2">Save</button>		
+				</div>
+			</div>		
 		</form><hr>
 		
 		
 		<!-- list of caregivers -->
-		<p class="h4 mb-4">Caregivers</p><br/>
+		<p class="h4 mb-4">Caregivers</p>
 		
 		<!-- dropdown with Caregivers to add -->
 		<div th:if="${listCaregiversToAdd != null}">
 			<form action="#" th:action="@{/clients/saveNewCaregiver(clientId=${client.id})}" 
 								th:object="${caregiverSelector}" method="POST">
-								
-				<div class="form-group blu-margin">
-				    <select class="form-control" th:field="*{selectedCaregiver}">
-					    <option value="null">Select caregiver</option>
-					    <option th:each="tempCaregiver : ${listCaregiversToAdd}" th:value="${tempCaregiver.id}" th:text="${tempCaregiver.name}"></option>
-				    </select>
-				</div>
+				<div class="container" >
+					<div class="row">
+					    <select class="form-control col-4" th:field="*{selectedCaregiver}">
+						    <option value="null">Add new</option>
+						    <option th:each="tempCaregiver : ${listCaregiversToAdd}" th:value="${tempCaregiver.id}" th:text="${tempCaregiver.name}"></option>
+					    </select>
+						
+						<button type="submit" class="btn btn-info col-2 ml-2">Add</button>
+					</div>
+				</div>				
 				
-				<button type="submit" class="btn btn-info col-2">Add caregiver</button>
 				
 			</form><br/>
 		</div>
