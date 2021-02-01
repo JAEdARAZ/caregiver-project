@@ -77,4 +77,11 @@ public class ClientController {
 		redirectAttributes.addAttribute("clientId", clientId);
 		return "redirect:/clients/clientFormUpdate";
 	}
+	
+	@GetMapping("/tasksForm")
+	public String showTasksForm(@RequestParam("clientId") int clientId, Model theModel) {
+		theModel.addAttribute("client", clientService.findById(clientId));
+		
+		return "forms/tasks-form";
+	}
 }

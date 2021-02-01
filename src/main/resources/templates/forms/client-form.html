@@ -9,14 +9,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 </head>
 
 <body>
 	<div class="container mt-3">
 		
-		<h4>CLIENT</h4><hr>
+		<div class="row">
+			<div class="col-8">
+				<h1>CLIENT</h1>
+			</div>
+			<div class="col-4 text-right">
+				<a class="btn btn-warning btn-lg" th:href="@{/clients/tasksForm(clientId=${client.id})}" role="button">
+					<b>TASKS  </b><i class="fas fa-tasks"></i>
+				</a>
+			</div>
+		</div><hr>
 		
-		<!-- employee form -->
+		<!-- client form -->
 		<form action="#" th:action="@{/clients/save}" th:object="${client}" method="POST">
 			<input type="hidden" th:field="*{id}" /> 
 			
