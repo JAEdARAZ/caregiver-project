@@ -1,5 +1,7 @@
 package com.caregiverproject.controller;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.caregiverproject.entity.Caregiver;
 import com.caregiverproject.entity.CaregiverSelector;
 import com.caregiverproject.entity.Client;
+import com.caregiverproject.entity.Task;
 import com.caregiverproject.service.ClientService;
 
 @Controller
@@ -80,7 +83,14 @@ public class ClientController {
 	
 	@GetMapping("/tasksForm")
 	public String showTasksForm(@RequestParam("clientId") int clientId, Model theModel) {
-		theModel.addAttribute("client", clientService.findById(clientId));
+		Client client = clientService.findById(clientId);
+		Set<Task> tasks = client.getTasks();
+		for(Task t : tasks) {
+			System.out.println(">>> Task: " + t.toString());
+		}
+		
+		theModel.addAttribute("client", client);
+		//theModel.addAttribute("clientTasks", client.getTasks());
 		
 		return "forms/tasks-form";
 	}

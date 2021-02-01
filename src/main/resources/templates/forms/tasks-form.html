@@ -17,6 +17,30 @@
 		<h2 th:text="${#strings.toUpperCase(client.name)} + ' TASKS'"></h2>
 		<hr><br/>
 		
+		<table class="table table-bordered table-striped">
+			<thead class="thead-dark">
+				<tr>
+					<th>Task</th>
+					<th>Order</th>
+					<th></th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each="tempTask : ${client.tasks}">
+					<td class="col-8" th:text="${tempTask.desc}" />
+					<td class="col-2" th:text="${tempTask.order}" />
+					<td class="col-2">
+						<a th:href="@{/mainMenu}"
+						   class="btn btn-danger btn-sm"
+						   onclick="if (!(confirm('Sure you want to delete the caregiver?'))) return false">
+							Delete
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
 		<a th:href="@{/mainMenu}">Back to Main Menu</a>
 		
 	</div>
