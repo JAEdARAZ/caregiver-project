@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -34,6 +35,11 @@ public class Client {
 		inverseJoinColumns=@JoinColumn(name="id_caregiver")
 	)
 	private Set<Caregiver> caregivers;
+	
+	//One client to many tasks
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinColumn(name="id_client") //foreign key in Task table
+	private Set<Task> tasks;
 
 	public Client() {}
 
@@ -60,6 +66,14 @@ public class Client {
 	public void setCaregivers(Set<Caregiver> caregivers) {
 		this.caregivers = caregivers;
 	}
+	
+	public Set<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(Set<Task> tasks) {
+		this.tasks = tasks;
+	}
 
 	@Override
 	public String toString() {
@@ -76,6 +90,18 @@ public class Client {
 	
 	public void deleteCaregiver(Caregiver caregiver) {
 		this.caregivers.remove(caregiver);
+	}
+	
+	public void addTask(Task task) {
+		if(this.tasks == null) {
+			this.tasks = new HashSet<>();
+		}
+		
+		this.tasks.add(task);
+	}
+	
+	public void deleteTask(Task task) {
+		this.tasks.remove(task);
 	}
 	
 }
