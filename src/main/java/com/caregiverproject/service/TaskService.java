@@ -6,6 +6,8 @@ public interface TaskService {
 
 	Task findById(int theId);
 	
+	Task save(Task task);
+	
 	Task findClientTask(int idTask);
 
 }

@@ -36,9 +36,8 @@ public class Client {
 	)
 	private Set<Caregiver> caregivers;
 	
-	//One client to many tasks
-	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	@JoinColumn(name="id_client") //foreign key in Task table
+	//One client to many tasks -- 	//@JoinColumn(name="id_client") //foreign key in Task table (removed to try do bidirectional OneToMany)
+	@OneToMany(mappedBy = "client", cascade=CascadeType.ALL)
 	private Set<Task> tasks;
 
 	public Client() {}
@@ -98,10 +97,12 @@ public class Client {
 		}
 		
 		this.tasks.add(task);
+		task.setClient(this);
 	}
 	
 	public void deleteTask(Task task) {
 		this.tasks.remove(task);
+		task.setClient(null);
 	}
 	
 }

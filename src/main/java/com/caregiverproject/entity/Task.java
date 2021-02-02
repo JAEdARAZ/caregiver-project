@@ -2,9 +2,12 @@ package com.caregiverproject.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,6 +27,10 @@ public class Task {
 	
 	@Column(name="order")
 	private Integer order;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_client") //foreign key in client TABLE!
+    private Client client;
 	
 	public Task() {}
 
@@ -57,6 +64,14 @@ public class Task {
 
 	public void setOrder(Integer order) {
 		this.order = order;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
 	}
 
 	@Override

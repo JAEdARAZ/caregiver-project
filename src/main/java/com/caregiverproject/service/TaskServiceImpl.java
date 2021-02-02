@@ -31,6 +31,11 @@ public class TaskServiceImpl implements TaskService {
 	}
 	
 	@Override
+	public Task save(Task task) {
+		return taskRepository.save(task);
+	}
+	
+	@Override
 	public Task findClientTask(int idTask) {
 		return this.findById(idTask);
 	}
