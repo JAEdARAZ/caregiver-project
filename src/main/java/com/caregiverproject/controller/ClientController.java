@@ -1,7 +1,5 @@
 package com.caregiverproject.controller;
 
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,16 +16,19 @@ import com.caregiverproject.entity.CaregiverSelector;
 import com.caregiverproject.entity.Client;
 import com.caregiverproject.entity.Task;
 import com.caregiverproject.service.ClientService;
+import com.caregiverproject.service.TaskService;
 
 @Controller
 @RequestMapping("/clients")
 public class ClientController {
 	
 	private ClientService clientService;
+	private TaskService taskService;
 	
 	@Autowired
-	public ClientController(ClientService clientService) {
+	public ClientController(ClientService clientService, TaskService taskService) {
 		this.clientService = clientService;
+		this.taskService = taskService;
 	}
 	
 	@GetMapping("/clientForm")
@@ -74,7 +75,7 @@ public class ClientController {
 										@ModelAttribute CaregiverSelector caregiverSelector, BindingResult bindingResult) {
 		if(!bindingResult.hasErrors()) {
 			Caregiver theCaregiver = caregiverSelector.getSelectedCaregiver();
-			clientService.addCaregiverToClient(theCaregiver.getId(), clientId);
+			clientService.addCaregiverToClient(theCaregiver.getId(), clientId); //TODO: pasar directamente el caregiver??
 		}
 		
 		redirectAttributes.addAttribute("clientId", clientId);
@@ -84,14 +85,18 @@ public class ClientController {
 	@GetMapping("/tasksForm")
 	public String showTasksForm(@RequestParam("clientId") int clientId, Model theModel) {
 		Client client = clientService.findById(clientId);
-		Set<Task> tasks = client.getTasks();
-		for(Task t : tasks) {
-			System.out.println(">>> Task: " + t.toString());
-		}
-		
 		theModel.addAttribute("client", client);
-		//theModel.addAttribute("clientTasks", client.getTasks());
 		
 		return "forms/tasks-form";
 	}
+	
+	@GetMapping("/tasksForm/showEditTask")
+	public String showEditTask(@RequestParam("taskId") int taskId, Model theModel) {
+		Task task = taskService.findById(taskId);
+		theModel.addAttribute("task", task);
+		
+		return "forms/task-edit-form";
+	}
+	
+	
 }

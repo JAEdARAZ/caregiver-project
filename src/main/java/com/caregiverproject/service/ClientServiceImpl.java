@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.caregiverproject.dao.ClientRepository;
+import com.caregiverproject.dao.TaskRepository;
 import com.caregiverproject.entity.Caregiver;
 import com.caregiverproject.entity.Client;
+import com.caregiverproject.entity.Task;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -83,5 +85,5 @@ public class ClientServiceImpl implements ClientService {
 		
 		return caregivers.size() > 0 ? caregivers : null;
 	}
-
+	
 }

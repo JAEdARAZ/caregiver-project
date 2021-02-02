@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Save caregiver</title>
+	<title>Task</title>
 	
 	<!-- Required meta tags -->
     <meta charset="utf-8">
@@ -14,26 +14,25 @@
 <body>
 	<div class="container">
 		
-		<h3>Caregiver directory</h3><hr>
+		<h3>Edit Task</h3><hr>
 		
-		<p class="h4 mb-4">Save Caregiver</p>
-		
-		<!-- caregiver form -->
-		<form action="#" th:action="@{/caregivers/save}"
-						 th:object="${caregiver}" method="POST">
+		<!-- task form -->
+		<form action="#" th:action="@{/clients/tasksForm/save}"
+						 th:object="${task}" method="POST">
 						 
-			<input type="hidden" th:field="*{id}" /> 
+			<input type="hidden" th:field="*{id}" />
 						 
-			<input type="text" th:field="*{name}"
-					class="form-control mb-4 col-4" placeholder="Name" />
-			<input type="text" th:field="*{colour}"
-					class="form-control mb-4 col-4" placeholder="Colour" />
+			<input type="text" th:field="*{desc}"
+					class="form-control mb-4 col-4" placeholder="Description" />
+			<input type="text" th:field="*{extraInfo}"
+					class="form-control mb-4 col-4" placeholder="Extra information" />
+			<input type="text" th:field="*{order}"
+					class="form-control mb-4 col-4" placeholder="Order" />
 					
 			<button type="submit" class="btn btn-info col-2">Save</button>
 			
-		</form>
+		</form><br/>
 		
-		<hr>
 		<a th:href="@{/mainMenu}">Back to Main Menu</a>
 		
 	</div>

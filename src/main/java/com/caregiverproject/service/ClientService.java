@@ -21,4 +21,5 @@ public interface ClientService {
 	void deleteCaregiverFromClient(int idCaregiver, int idClient);
 
 	List<Caregiver> getRemainingCaregivers(int idClient);
+
 }

@@ -23,6 +23,7 @@
 					<th>Task</th>
 					<th>Order</th>
 					<th></th>
+					<th></th>
 				</tr>
 			</thead>
 			
@@ -31,10 +32,15 @@
 					<td class="col-8" th:text="${tempTask.desc}" />
 					<td class="col-2" th:text="${tempTask.order}" />
 					<td class="col-2">
+						<a th:href="@{/clients/tasksForm/showEditTask(taskId=${tempTask.id})}" class="btn btn-danger btn-sm">
+							<i class="far fa-edit"></i>
+						</a>
+					</td>
+					<td class="col-2">
 						<a th:href="@{/mainMenu}"
 						   class="btn btn-danger btn-sm"
 						   onclick="if (!(confirm('Sure you want to delete the caregiver?'))) return false">
-							Delete
+							<i class="fas fa-times"></i>
 						</a>
 					</td>
 				</tr>
