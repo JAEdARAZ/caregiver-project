@@ -18,11 +18,13 @@ public class ClientServiceImpl implements ClientService {
 
 	private ClientRepository clientRepository;
 	private CaregiverService caregiverService;
+	private TaskService taskService;
 	
 	@Autowired
-	public ClientServiceImpl(ClientRepository clientRepository, CaregiverService caregiverService) {
+	public ClientServiceImpl(ClientRepository clientRepository, CaregiverService caregiverService, TaskService taskService) {
 		this.clientRepository = clientRepository;
 		this.caregiverService = caregiverService;
+		this.taskService = taskService;
 	}
 	
 	@Override
@@ -85,5 +87,26 @@ public class ClientServiceImpl implements ClientService {
 		
 		return caregivers.size() > 0 ? caregivers : null;
 	}
+	
+	@Override
+	public void deleteTaskFromClient(int idTask, int idClient) {
+		Task task = taskService.findById(idTask);
+		Client client = this.findById(idClient);
+		
+		client.deleteTask(task);
+		taskService.delete(task);
+	}
+
+	@Override
+	public void addTaskToClient(Client client, Task task) {
+		System.out.println(">>> Task preSave: " + task.toString());
+		System.out.println(">>> Task Client preSave: " + task.getClient().toString());
+		
+		task.setClient(null);
+		client.addTask(task);
+		taskService.save(task);
+	}
+	
+	
 	
 }

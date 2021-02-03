@@ -10,4 +10,8 @@ public interface TaskService {
 	
 	Task findClientTask(int idTask);
 
+	void deleteById(int theId);
+
+	void delete(Task task);
+
 }

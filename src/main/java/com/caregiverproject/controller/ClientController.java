@@ -107,13 +107,29 @@ public class ClientController {
 	
 	@PostMapping("/tasksForm/save")
 	public String saveTask(RedirectAttributes redirectAttributes, @ModelAttribute Task task) {
-		System.out.println(">>> Task: " + task.toString());
-		System.out.println(">>> Task Client: " + task.getClient().toString());
-		//taskService.save(task);
+		Client client = task.getClient();
+		clientService.addTaskToClient(client, task);
 		
-		int clientId = task.getClient().getId();
-		redirectAttributes.addAttribute("clientId", clientId);
-		
+		redirectAttributes.addAttribute("clientId", client.getId());
 		return "redirect:/clients/clientFormUpdate";
 	}
+	
+	@GetMapping("/tasksForm/delete")
+	public String deleteTask(RedirectAttributes redirectAttributes, @RequestParam("taskId") int taskId,
+									@RequestParam("clientId") int clientId) {
+		clientService.deleteTaskFromClient(taskId, clientId);
+		
+		redirectAttributes.addAttribute("clientId", clientId);
+		return "redirect:/clients/forms/tasks-form";
+	}
+	
+	@GetMapping("/tasksForm/showNewTask")
+	public String showNewTask(@RequestParam("clientId") int clientId, Model theModel) {
+		Task task = new Task();
+		task.setClient(clientService.findById(clientId));
+		theModel.addAttribute("task", task);
+		
+		return "forms/task-edit-form";
+	}
+	
 }

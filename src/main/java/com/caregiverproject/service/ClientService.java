@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.caregiverproject.entity.Caregiver;
 import com.caregiverproject.entity.Client;
+import com.caregiverproject.entity.Task;
 
 
 public interface ClientService {
@@ -21,5 +22,9 @@ public interface ClientService {
 	void deleteCaregiverFromClient(int idCaregiver, int idClient);
 
 	List<Caregiver> getRemainingCaregivers(int idClient);
+
+	void deleteTaskFromClient(int idTask, int idClient);
+
+	public void addTaskToClient(Client client, Task task);
 
 }

@@ -37,7 +37,7 @@ public class Client {
 	private Set<Caregiver> caregivers;
 	
 	//One client to many tasks -- 	//@JoinColumn(name="id_client") //foreign key in Task table (removed to try do bidirectional OneToMany)
-	@OneToMany(mappedBy = "client", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "client", cascade=CascadeType.ALL, orphanRemoval = true)
 	private Set<Task> tasks;
 
 	public Client() {}

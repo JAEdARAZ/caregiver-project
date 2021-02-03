@@ -15,8 +15,16 @@
 <body>
 	<div class="container mt-3">
 		
-		<h2 th:text="${#strings.toUpperCase(client.name)} + ' TASKS'"></h2>
-		<hr><br/>
+		<div class="row">
+			<div class="col-8">
+				<h2 th:text="${#strings.toUpperCase(client.name)} + ' TASKS'"></h2>
+			</div>
+			<div class="col-4 text-right">
+				<a class="btn btn-success btn-lg" th:href="@{/clients/tasksForm/showNewTask(clientId=${client.id})}" role="button">
+					<i class="fas fa-plus"></i>
+				</a>
+			</div>
+		</div><hr>
 		
 		<table class="table table-bordered table-striped">
 			<thead class="thead-dark">
@@ -39,7 +47,7 @@
 						</a>
 					</td>
 					<td class="col-2">
-						<a th:href="@{/mainMenu}"
+						<a th:href="@{/clients/tasksForm/delete(clientId=${client.id},taskId=${tempTask.id})}"
 						   class="btn btn-danger btn-sm"
 						   onclick="if (!(confirm('Sure you want to delete the caregiver?'))) return false">
 							<i class="fas fa-times"></i>
