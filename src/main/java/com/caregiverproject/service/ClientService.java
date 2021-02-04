@@ -25,6 +25,6 @@ public interface ClientService {
 
 	void deleteTaskFromClient(int idTask, int idClient);
 
-	public void addTaskToClient(Client client, Task task);
+	public void addTaskToClient(int idClient, Task task);
 
 }

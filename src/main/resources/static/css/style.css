@@ -1,0 +1,12 @@
+.table tr td {
+	font-size: 26px;
+}
+
+.table thead tr th {
+    font-size: 22px;
+}
+
+textarea {
+  width: 100%;
+  height: 100%;
+}

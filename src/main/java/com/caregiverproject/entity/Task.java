@@ -19,14 +19,14 @@ public class Task {
 	@Column(name="id")
 	private int id;
 	
-	@Column(name="desc")
+	@Column(name="task_desc")
 	private String desc;
 	
 	@Column(name="extra_info")
 	private String extraInfo;
 	
-	@Column(name="order")
-	private int order;
+	@Column(name="order_complete")
+	private Integer order;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_client") //foreign key in client TABLE!
@@ -58,11 +58,11 @@ public class Task {
 		this.extraInfo = extraInfo;
 	}
 
-	public int getOrder() {
+	public Integer getOrder() {
 		return order;
 	}
 
-	public void setOrder(int order) {
+	public void setOrder(Integer order) {
 		this.order = order;
 	}
 

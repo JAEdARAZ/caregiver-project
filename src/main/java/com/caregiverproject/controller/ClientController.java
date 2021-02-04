@@ -108,7 +108,7 @@ public class ClientController {
 	@PostMapping("/tasksForm/save")
 	public String saveTask(RedirectAttributes redirectAttributes, @ModelAttribute Task task) {
 		Client client = task.getClient();
-		clientService.addTaskToClient(client, task);
+		clientService.addTaskToClient(client.getId(), task);
 		
 		redirectAttributes.addAttribute("clientId", client.getId());
 		return "redirect:/clients/clientFormUpdate";

@@ -8,6 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	
+	<link type="text/css" rel="stylesheet" th:href="@{/css/style.css}">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 </head>
@@ -26,7 +27,7 @@
 			</div>
 		</div><hr>
 		
-		<table class="table table-bordered table-striped">
+		<table class="table table-bordered table-striped text-center">
 			<thead class="thead-dark">
 				<tr>
 					<th>Task</th>
@@ -38,17 +39,17 @@
 			
 			<tbody>
 				<tr th:each="tempTask : ${client.tasks}">
-					<td class="col-8" th:text="${tempTask.desc}" />
-					<td class="col-2" th:text="${tempTask.order}" />
+					<td class="col-8 align-middle" th:text="${tempTask.desc}" />
+					<td class="col-2 align-middle" th:text="${tempTask.order}" />
 					<td class="col-2">
 						<a th:href="@{/clients/tasksForm/showEditTask(taskId=${tempTask.id})}" 
-						   class="btn btn-info btn-sm">
+						   class="btn btn-info">
 							<i class="far fa-edit"></i>
 						</a>
 					</td>
 					<td class="col-2">
 						<a th:href="@{/clients/tasksForm/delete(clientId=${client.id},taskId=${tempTask.id})}"
-						   class="btn btn-danger btn-sm"
+						   class="btn btn-danger"
 						   onclick="if (!(confirm('Sure you want to delete the caregiver?'))) return false">
 							<i class="fas fa-times"></i>
 						</a>

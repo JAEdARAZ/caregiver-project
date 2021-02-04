@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.caregiverproject.dao.ClientRepository;
-import com.caregiverproject.dao.TaskRepository;
 import com.caregiverproject.entity.Caregiver;
 import com.caregiverproject.entity.Client;
 import com.caregiverproject.entity.Task;
@@ -98,11 +97,8 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public void addTaskToClient(Client client, Task task) {
-		System.out.println(">>> Task preSave: " + task.toString());
-		System.out.println(">>> Task Client preSave: " + task.getClient().toString());
-		
-		task.setClient(null);
+	public void addTaskToClient(int idClient, Task task) {
+		Client client = this.findById(idClient);
 		client.addTask(task);
 		taskService.save(task);
 	}
