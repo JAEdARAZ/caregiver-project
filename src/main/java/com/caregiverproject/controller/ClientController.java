@@ -33,6 +33,7 @@ public class ClientController {
 		this.taskService = taskService;
 	}
 	
+	
 	@GetMapping("/clientForm")
 	public String showClientForm(Model theModel) {
 		theModel.addAttribute("client", new Client());
@@ -40,12 +41,14 @@ public class ClientController {
 		return "forms/client-form";
 	}
 	
+	
 	@PostMapping("/save")
 	public String saveClient(@ModelAttribute Client theClient) {
 		clientService.save(theClient);
 		
 		return "redirect:/mainMenu";
 	}
+	
 	
 	@GetMapping("/clientFormUpdate")
 	public String updateClient(@RequestParam("clientId") int clientId, Model theModel) {
@@ -68,6 +71,7 @@ public class ClientController {
 		return "forms/client-form";
 	}
 	
+	
 	@GetMapping("/deleteCaregiver")
 	public String deleteCaregiver(RedirectAttributes redirectAttributes, @RequestParam("caregiverId") int caregiverId,
 									@RequestParam("clientId") int clientId) {
@@ -76,6 +80,7 @@ public class ClientController {
 		redirectAttributes.addAttribute("clientId", clientId);
 		return "redirect:/clients/clientFormUpdate";
 	}
+	
 	
 	@PostMapping("/saveNewCaregiver")
 	public String saveNewCaregiver(RedirectAttributes redirectAttributes, @RequestParam("clientId") int clientId, 
@@ -89,6 +94,7 @@ public class ClientController {
 		return "redirect:/clients/clientFormUpdate";
 	}
 	
+	
 	@GetMapping("/tasksForm")
 	public String showTasksForm(@RequestParam("clientId") int clientId, Model theModel) {
 		Client client = clientService.findById(clientId);
@@ -96,6 +102,7 @@ public class ClientController {
 		
 		return "forms/tasks-form";
 	}
+	
 	
 	@GetMapping("/tasksForm/showEditTask")
 	public String showEditTask(@RequestParam("taskId") int taskId, Model theModel) {
@@ -105,14 +112,22 @@ public class ClientController {
 		return "forms/task-edit-form";
 	}
 	
+	
 	@PostMapping("/tasksForm/save")
 	public String saveTask(RedirectAttributes redirectAttributes, @ModelAttribute Task task) {
-		Client client = task.getClient();
-		clientService.addTaskToClient(client.getId(), task);
+		int clientId = task.getClient().getId();
 		
-		redirectAttributes.addAttribute("clientId", client.getId());
+		if(task.getId()==0) {
+			clientService.addTaskToClient(clientId, task);
+		}
+		else {
+			taskService.save(task);
+		}
+
+		redirectAttributes.addAttribute("clientId", clientId);
 		return "redirect:/clients/clientFormUpdate";
 	}
+	
 	
 	@GetMapping("/tasksForm/delete")
 	public String deleteTask(RedirectAttributes redirectAttributes, @RequestParam("taskId") int taskId,
@@ -122,6 +137,7 @@ public class ClientController {
 		redirectAttributes.addAttribute("clientId", clientId);
 		return "redirect:/clients/forms/tasks-form";
 	}
+	
 	
 	@GetMapping("/tasksForm/showNewTask")
 	public String showNewTask(@RequestParam("clientId") int clientId, Model theModel) {

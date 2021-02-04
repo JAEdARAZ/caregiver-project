@@ -38,7 +38,6 @@ public class CaregiverServiceImpl implements CaregiverService {
 
 	@Override
 	public Caregiver save(Caregiver theCaregiver) {
-		System.out.println(">>> save caregiver: " + theCaregiver.toString());
 		return caregiverRepository.save(theCaregiver);
 	}
 
