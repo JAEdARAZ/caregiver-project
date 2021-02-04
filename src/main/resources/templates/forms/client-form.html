@@ -43,29 +43,34 @@
 					<button type="submit" class="btn btn-info col-2 ml-2">SAVE</button>		
 				</div>
 			</div>		
-		</form><hr>
+		</form>
 		
+		<hr><br/>
 		
 		<!-- list of caregivers -->
-		<p class="h4 mb-4">Caregivers</p>
-		
-		<!-- dropdown with Caregivers to add -->
-		<div th:if="${listCaregiversToAdd != null}">
-			<form action="#" th:action="@{/clients/saveNewCaregiver(clientId=${client.id})}" 
-								th:object="${caregiverSelector}" method="POST">
-				<div class="container" >
-					<div class="row">
-					    <select class="form-control col-4" th:field="*{selectedCaregiver}">
-						    <option value="null">Add new</option>
-						    <option th:each="tempCaregiver : ${listCaregiversToAdd}" th:value="${tempCaregiver.id}" th:text="${tempCaregiver.name}"></option>
-					    </select>
-						
-						<button type="submit" class="btn btn-info col-2 ml-2">ADD</button>
-					</div>
-				</div>				
-				
-				
-			</form><br/>
+		<div class="row">
+			<div class="col-3">
+				<p class="h2 mb-4">Caregivers</p>
+			</div>
+			
+			<!-- dropdown with Caregivers to add -->
+			<div class="col-9">
+				<div th:if="${listCaregiversToAdd != null}">
+					<form action="#" th:action="@{/clients/saveNewCaregiver(clientId=${client.id})}" 
+										th:object="${caregiverSelector}" method="POST">
+						<div class="container" >
+							<div class="row">
+							    <select class="form-control col-4" th:field="*{selectedCaregiver}">
+								    <option value="null">Add new</option>
+								    <option th:each="tempCaregiver : ${listCaregiversToAdd}" th:value="${tempCaregiver.id}" th:text="${tempCaregiver.name}"></option>
+							    </select>
+								
+								<button type="submit" class="btn btn-info col-2 ml-2">ADD</button>
+							</div>
+						</div>				
+					</form>
+				</div>
+			</div>
 		</div>
 		
 		
@@ -79,8 +84,8 @@
 			
 			<tbody>
 				<tr th:each="tempCaregiver : ${client.caregivers}">
-					<td class="col-10" th:text="${tempCaregiver.name}" />
-					<td class="col-2">
+					<td class="col-8" th:text="${tempCaregiver.name}" />
+					<td class="col-4">
 						<a th:href="@{/clients/deleteCaregiver(caregiverId=${tempCaregiver.id}, clientId=${client.id})}"
 						   class="btn btn-danger"
 						   onclick="if (!(confirm('Sure you want to delete the caregiver?'))) return false">

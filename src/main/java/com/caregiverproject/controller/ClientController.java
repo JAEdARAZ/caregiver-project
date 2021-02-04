@@ -1,7 +1,5 @@
 package com.caregiverproject.controller;
 
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,10 +52,6 @@ public class ClientController {
 	public String updateClient(@RequestParam("clientId") int clientId, Model theModel) {
 		//client form
 		Client theClient = clientService.findById(clientId);
-		Set<Task> tasks = theClient.getTasks();
-		for(Task t : tasks) {
-			System.out.println(">>> Task: " + t.toString());
-		}
 		
 		theModel.addAttribute("client", theClient);
 		
